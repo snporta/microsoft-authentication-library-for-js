@@ -95,6 +95,7 @@ export class Storage {// Singleton
       let key: string;
       for (key in storage) {
         if (storage.hasOwnProperty(key)) {
+          key = key.split(this._cachePrefix)[1];
           if (key.match(clientId) && key.match(userIdentifier)) {
             let value = this.getItem(key);
             if (value) {
