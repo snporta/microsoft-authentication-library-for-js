@@ -93,6 +93,8 @@ export class UserAgentApplication {
    */
   private _cacheLocation: string;
 
+  private _cachePrefix: string;
+
   /*
    * Used to get the cache location
    */
@@ -229,10 +231,12 @@ export class UserAgentApplication {
         logger?: Logger,
         loadFrameTimeout?: number,
         navigateToLoginRequestUrl?: boolean,
+        cachePrefix?: string,
       } = {}) {
       const {
           validateAuthority = true,
           cacheLocation = "sessionStorage",
+          cachePrefix = "",
           redirectUri = window.location.href.split("?")[0].split("#")[0],
           postLogoutRedirectUri = window.location.href.split("?")[0].split("#")[0],
           logger = new Logger(null),
@@ -252,6 +256,7 @@ export class UserAgentApplication {
     this._renewStates = [];
     this._activeRenewals = {};
     this._cacheLocation = cacheLocation;
+    this._cachePrefix = cachePrefix;
     this._navigateToLoginRequestUrl = navigateToLoginRequestUrl;
     if (!this._cacheLocations[cacheLocation]) {
       throw new Error("Cache Location is not valid. Provided value:" + this._cacheLocation + ".Possible values are: " + this._cacheLocations.localStorage + ", " + this._cacheLocations.sessionStorage);
