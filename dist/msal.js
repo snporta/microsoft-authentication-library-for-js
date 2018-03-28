@@ -3533,7 +3533,6 @@ var Storage = /** @class */ (function () {
                         var keyValue = key;
                         if (this._cachePrefix.length > 0) {
                             keyValue = key.split(this._cachePrefix)[1];
-                            ;
                         }
                         this.removeItem(keyValue);
                     }
