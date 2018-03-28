@@ -95,9 +95,9 @@ export class Storage {// Singleton
       let key: string;
       for (key in storage) {
         if (storage.hasOwnProperty(key)) {
-          key = key.split(this._cachePrefix)[1];
-          if (key.match(clientId) && key.match(userIdentifier)) {
-            let value = this.getItem(key);
+          let keyValue = key.split(this._cachePrefix)[1];
+          if (keyValue.match(clientId) && keyValue.match(userIdentifier)) {
+            let value = this.getItem(keyValue);
             if (value) {
               accessTokenCacheItem = new AccessTokenCacheItem(JSON.parse(key), JSON.parse(value));
               results.push(accessTokenCacheItem);
