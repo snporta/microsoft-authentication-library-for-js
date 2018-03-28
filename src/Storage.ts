@@ -95,7 +95,12 @@ export class Storage {// Singleton
       let key: string;
       for (key in storage) {
         if (storage.hasOwnProperty(key)) {
-          let keyValue = key.split(this._cachePrefix)[1];
+
+          let keyValue = key;
+          if(this._cachePrefix.length > 0) {
+            keyValue = key.split(this._cachePrefix)[1];;
+          }
+
           if (keyValue.match(clientId) && keyValue.match(userIdentifier)) {
             let value = this.getItem(keyValue);
             if (value) {
@@ -119,7 +124,11 @@ export class Storage {// Singleton
       for (key in storage) {
         if (storage.hasOwnProperty(key)) {
           if ((key.indexOf(acquireTokenUser) > -1) || (key.indexOf(acquireTokenStatus) > -1)) {
-            this.removeItem(key);
+            let keyValue = key;
+            if(this._cachePrefix.length > 0) {
+              keyValue = key.split(this._cachePrefix)[1];;
+            }
+            this.removeItem(keyValue);
           }
         }
       }
