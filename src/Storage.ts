@@ -98,7 +98,7 @@ export class Storage {// Singleton
 
           let keyValue = key;
           if(this._cachePrefix.length > 0) {
-            keyValue = key.split(this._cachePrefix)[1];;
+            keyValue = key.split(this._cachePrefix)[1];
           }
 
           if (keyValue.match(clientId) && keyValue.match(userIdentifier)) {
@@ -126,7 +126,7 @@ export class Storage {// Singleton
           if ((key.indexOf(acquireTokenUser) > -1) || (key.indexOf(acquireTokenStatus) > -1)) {
             let keyValue = key;
             if(this._cachePrefix.length > 0) {
-              keyValue = key.split(this._cachePrefix)[1];;
+              keyValue = key.split(this._cachePrefix)[1];
             }
             this.removeItem(keyValue);
           }

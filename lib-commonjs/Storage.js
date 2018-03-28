@@ -86,8 +86,12 @@ var Storage = /** @class */ (function () {
             var key = void 0;
             for (key in storage) {
                 if (storage.hasOwnProperty(key)) {
-                    if (key.match(clientId) && key.match(userIdentifier)) {
-                        var value = this.getItem(key);
+                    var keyValue = key;
+                    if (this._cachePrefix.length > 0) {
+                        keyValue = key.split(this._cachePrefix)[1];
+                    }
+                    if (keyValue.match(clientId) && keyValue.match(userIdentifier)) {
+                        var value = this.getItem(keyValue);
                         if (value) {
                             accessTokenCacheItem = new AccessTokenCacheItem_1.AccessTokenCacheItem(JSON.parse(key), JSON.parse(value));
                             results.push(accessTokenCacheItem);
@@ -108,7 +112,12 @@ var Storage = /** @class */ (function () {
             for (key in storage) {
                 if (storage.hasOwnProperty(key)) {
                     if ((key.indexOf(acquireTokenUser) > -1) || (key.indexOf(acquireTokenStatus) > -1)) {
-                        this.removeItem(key);
+                        var keyValue = key;
+                        if (this._cachePrefix.length > 0) {
+                            keyValue = key.split(this._cachePrefix)[1];
+                            ;
+                        }
+                        this.removeItem(keyValue);
                     }
                 }
             }
