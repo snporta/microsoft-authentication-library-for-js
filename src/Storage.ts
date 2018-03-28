@@ -33,12 +33,13 @@ export class Storage {// Singleton
   private _localStorageSupported: boolean;
   private _sessionStorageSupported: boolean;
   private _cacheLocation: string;
+  private _cachePrefix: string;
 
-  constructor(cacheLocation: string) {
+  constructor(cacheLocation: string, cachePrefix: string) {
     if (Storage._instance) {
       return Storage._instance;
     }
-
+    this._cachePrefix = cachePrefix;
     this._cacheLocation = cacheLocation;
     this._localStorageSupported = typeof window[this._cacheLocation] !== "undefined" && window[this._cacheLocation] != null;
     this._sessionStorageSupported = typeof window[cacheLocation] !== "undefined" && window[cacheLocation] != null;
@@ -53,7 +54,7 @@ export class Storage {// Singleton
   // add value to storage
   setItem(key: string, value: string): void {
     if (window[this._cacheLocation]) {
-      window[this._cacheLocation].setItem(key, value);
+      window[this._cacheLocation].setItem(this._cachePrefix + key, value);
     } else {
       throw new Error("localStorage and sessionStorage are not supported");
     }
@@ -62,7 +63,7 @@ export class Storage {// Singleton
   // get one item by key from storage
   getItem(key: string): string {
     if (window[this._cacheLocation]) {
-      return window[this._cacheLocation].getItem(key);
+      return window[this._cacheLocation].getItem(this._cachePrefix + key);
     } else {
       throw new Error("localStorage and sessionStorage are not supported");
     }
@@ -71,7 +72,7 @@ export class Storage {// Singleton
   // remove value from storage
   removeItem(key: string): void {
     if (window[this._cacheLocation]) {
-      return window[this._cacheLocation].removeItem(key);
+      return window[this._cacheLocation].removeItem(this._cachePrefix + key);
     } else {
       throw new Error("localStorage and sessionStorage are not supported");
     }

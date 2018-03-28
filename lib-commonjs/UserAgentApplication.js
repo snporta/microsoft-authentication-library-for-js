@@ -85,7 +85,7 @@ var UserAgentApplication = /** @class */ (function () {
          * @hidden
          */
         this._tokenReceivedCallback = null;
-        var _a = options.validateAuthority, validateAuthority = _a === void 0 ? true : _a, _b = options.cacheLocation, cacheLocation = _b === void 0 ? "sessionStorage" : _b, _c = options.redirectUri, redirectUri = _c === void 0 ? window.location.href.split("?")[0].split("#")[0] : _c, _d = options.postLogoutRedirectUri, postLogoutRedirectUri = _d === void 0 ? window.location.href.split("?")[0].split("#")[0] : _d, _e = options.logger, logger = _e === void 0 ? new Logger_1.Logger(null) : _e, _f = options.loadFrameTimeout, loadFrameTimeout = _f === void 0 ? 6000 : _f, _g = options.navigateToLoginRequestUrl, navigateToLoginRequestUrl = _g === void 0 ? true : _g;
+        var _a = options.validateAuthority, validateAuthority = _a === void 0 ? true : _a, _b = options.cacheLocation, cacheLocation = _b === void 0 ? "sessionStorage" : _b, _c = options.redirectUri, redirectUri = _c === void 0 ? window.location.href.split("?")[0].split("#")[0] : _c, _d = options.postLogoutRedirectUri, postLogoutRedirectUri = _d === void 0 ? window.location.href.split("?")[0].split("#")[0] : _d, _e = options.logger, logger = _e === void 0 ? new Logger_1.Logger(null) : _e, _f = options.loadFrameTimeout, loadFrameTimeout = _f === void 0 ? 6000 : _f, _g = options.navigateToLoginRequestUrl, navigateToLoginRequestUrl = _g === void 0 ? true : _g, _h = options.cachePrefix, cachePrefix = _h === void 0 ? "" : _h;
         this.loadFrameTimeout = loadFrameTimeout;
         this.clientId = clientId;
         this.validateAuthority = validateAuthority;
@@ -98,11 +98,12 @@ var UserAgentApplication = /** @class */ (function () {
         this._renewStates = [];
         this._activeRenewals = {};
         this._cacheLocation = cacheLocation;
+        this._cachePrefix = cachePrefix;
         this._navigateToLoginRequestUrl = navigateToLoginRequestUrl;
         if (!this._cacheLocations[cacheLocation]) {
             throw new Error("Cache Location is not valid. Provided value:" + this._cacheLocation + ".Possible values are: " + this._cacheLocations.localStorage + ", " + this._cacheLocations.sessionStorage);
         }
-        this._cacheStorage = new Storage_1.Storage(this._cacheLocation); //cache keys msal
+        this._cacheStorage = new Storage_1.Storage(this._cacheLocation, this._cachePrefix); //cache keys msal
         this._logger = logger;
         this._openedWindows = [];
         window.msal = this;
@@ -502,7 +503,7 @@ var UserAgentApplication = /** @class */ (function () {
         var accessTokenCacheItem = null;
         var scopes = authenticationRequest.scopes;
         var tokenCacheItems = this._cacheStorage.getAllAccessTokens(this.clientId, user.userIdentifier); //filter by clientId and user
-        if (tokenCacheItems.length === 0) {
+        if (tokenCacheItems.length === 0) { // No match found after initial filtering
             return null;
         }
         var filteredItems = [];
@@ -554,6 +555,7 @@ var UserAgentApplication = /** @class */ (function () {
             if (filteredItems.length === 0) {
                 return null;
             }
+            //only one cachedToken Found
             else if (filteredItems.length === 1) {
                 accessTokenCacheItem = filteredItems[0];
             }
@@ -1349,12 +1351,12 @@ var UserAgentApplication = /** @class */ (function () {
                 tokenResponse.stateResponse = stateResponse;
                 // async calls can fire iframe and login request at the same time if developer does not use the API as expected
                 // incoming callback needs to be looked up to find the request type
-                if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateLogin)) {
+                if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateLogin)) { // loginRedirect
                     tokenResponse.requestType = Constants_1.Constants.login;
                     tokenResponse.stateMatch = true;
                     return tokenResponse;
                 }
-                else if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateAcquireToken)) {
+                else if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateAcquireToken)) { //acquireTokenRedirect
                     tokenResponse.requestType = Constants_1.Constants.renewToken;
                     tokenResponse.stateMatch = true;
                     return tokenResponse;

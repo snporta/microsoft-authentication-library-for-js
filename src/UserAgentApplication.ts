@@ -94,6 +94,11 @@ export class UserAgentApplication {
   private _cacheLocation: string;
 
   /*
+   * @hidden
+   */
+  private _cachePrefix: string;
+
+  /*
    * Used to get the cache location
    */
   get cacheLocation(): string {
@@ -229,6 +234,7 @@ export class UserAgentApplication {
         logger?: Logger,
         loadFrameTimeout?: number,
         navigateToLoginRequestUrl?: boolean,
+        cachePrefix?: string,
       } = {}) {
       const {
           validateAuthority = true,
@@ -237,7 +243,8 @@ export class UserAgentApplication {
           postLogoutRedirectUri = window.location.href.split("?")[0].split("#")[0],
           logger = new Logger(null),
           loadFrameTimeout = 6000,
-          navigateToLoginRequestUrl = true
+          navigateToLoginRequestUrl = true,
+          cachePrefix = "",
       } = options;
 
     this.loadFrameTimeout = loadFrameTimeout;
@@ -252,12 +259,13 @@ export class UserAgentApplication {
     this._renewStates = [];
     this._activeRenewals = {};
     this._cacheLocation = cacheLocation;
+    this._cachePrefix = cachePrefix;
     this._navigateToLoginRequestUrl = navigateToLoginRequestUrl;
     if (!this._cacheLocations[cacheLocation]) {
       throw new Error("Cache Location is not valid. Provided value:" + this._cacheLocation + ".Possible values are: " + this._cacheLocations.localStorage + ", " + this._cacheLocations.sessionStorage);
     }
 
-    this._cacheStorage = new Storage(this._cacheLocation); //cache keys msal
+    this._cacheStorage = new Storage(this._cacheLocation, this._cachePrefix); //cache keys msal
     this._logger = logger;
     this._openedWindows = [];
     window.msal = this;

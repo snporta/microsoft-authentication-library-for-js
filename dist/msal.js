@@ -1,4 +1,4 @@
-/*! msal v0.1.5 2018-02-27 */
+/*! msal v0.1.5 2018-03-28 */
 
 'use strict';
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -10,7 +10,7 @@
 		exports["Msal"] = factory();
 	else
 		root["Msal"] = factory();
-})(this, function() {
+})(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -242,6 +242,7 @@ var Utils = /** @class */ (function () {
                 decoded += String.fromCharCode(c1, c2);
                 break;
             }
+            // if last one is "="
             else if (i + 1 === length - 1) {
                 bits = h1 << 18 | h2 << 12;
                 c1 = bits >> 16 & 255;
@@ -475,6 +476,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["__asyncGenerator"] = __asyncGenerator;
 /* harmony export (immutable) */ __webpack_exports__["__asyncDelegator"] = __asyncDelegator;
 /* harmony export (immutable) */ __webpack_exports__["__asyncValues"] = __asyncValues;
+/* harmony export (immutable) */ __webpack_exports__["__makeTemplateObject"] = __makeTemplateObject;
+/* harmony export (immutable) */ __webpack_exports__["__importStar"] = __importStar;
+/* harmony export (immutable) */ __webpack_exports__["__importDefault"] = __importDefault;
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -537,7 +541,7 @@ function __metadata(metadataKey, metadataValue) {
 function __awaiter(thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
@@ -636,6 +640,24 @@ function __asyncValues(o) {
     var m = o[Symbol.asyncIterator];
     return m ? m.call(o) : typeof __values === "function" ? __values(o) : o[Symbol.iterator]();
 }
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result.default = mod;
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
 
 /***/ }),
 /* 2 */
@@ -1695,7 +1717,7 @@ var UserAgentApplication = /** @class */ (function () {
          * @hidden
          */
         this._tokenReceivedCallback = null;
-        var _a = options.validateAuthority, validateAuthority = _a === void 0 ? true : _a, _b = options.cacheLocation, cacheLocation = _b === void 0 ? "sessionStorage" : _b, _c = options.redirectUri, redirectUri = _c === void 0 ? window.location.href.split("?")[0].split("#")[0] : _c, _d = options.postLogoutRedirectUri, postLogoutRedirectUri = _d === void 0 ? window.location.href.split("?")[0].split("#")[0] : _d, _e = options.logger, logger = _e === void 0 ? new Logger_1.Logger(null) : _e, _f = options.loadFrameTimeout, loadFrameTimeout = _f === void 0 ? 6000 : _f, _g = options.navigateToLoginRequestUrl, navigateToLoginRequestUrl = _g === void 0 ? true : _g;
+        var _a = options.validateAuthority, validateAuthority = _a === void 0 ? true : _a, _b = options.cacheLocation, cacheLocation = _b === void 0 ? "sessionStorage" : _b, _c = options.redirectUri, redirectUri = _c === void 0 ? window.location.href.split("?")[0].split("#")[0] : _c, _d = options.postLogoutRedirectUri, postLogoutRedirectUri = _d === void 0 ? window.location.href.split("?")[0].split("#")[0] : _d, _e = options.logger, logger = _e === void 0 ? new Logger_1.Logger(null) : _e, _f = options.loadFrameTimeout, loadFrameTimeout = _f === void 0 ? 6000 : _f, _g = options.navigateToLoginRequestUrl, navigateToLoginRequestUrl = _g === void 0 ? true : _g, _h = options.cachePrefix, cachePrefix = _h === void 0 ? "" : _h;
         this.loadFrameTimeout = loadFrameTimeout;
         this.clientId = clientId;
         this.validateAuthority = validateAuthority;
@@ -1708,11 +1730,12 @@ var UserAgentApplication = /** @class */ (function () {
         this._renewStates = [];
         this._activeRenewals = {};
         this._cacheLocation = cacheLocation;
+        this._cachePrefix = cachePrefix;
         this._navigateToLoginRequestUrl = navigateToLoginRequestUrl;
         if (!this._cacheLocations[cacheLocation]) {
             throw new Error("Cache Location is not valid. Provided value:" + this._cacheLocation + ".Possible values are: " + this._cacheLocations.localStorage + ", " + this._cacheLocations.sessionStorage);
         }
-        this._cacheStorage = new Storage_1.Storage(this._cacheLocation); //cache keys msal
+        this._cacheStorage = new Storage_1.Storage(this._cacheLocation, this._cachePrefix); //cache keys msal
         this._logger = logger;
         this._openedWindows = [];
         window.msal = this;
@@ -2112,7 +2135,7 @@ var UserAgentApplication = /** @class */ (function () {
         var accessTokenCacheItem = null;
         var scopes = authenticationRequest.scopes;
         var tokenCacheItems = this._cacheStorage.getAllAccessTokens(this.clientId, user.userIdentifier); //filter by clientId and user
-        if (tokenCacheItems.length === 0) {
+        if (tokenCacheItems.length === 0) { // No match found after initial filtering
             return null;
         }
         var filteredItems = [];
@@ -2164,6 +2187,7 @@ var UserAgentApplication = /** @class */ (function () {
             if (filteredItems.length === 0) {
                 return null;
             }
+            //only one cachedToken Found
             else if (filteredItems.length === 1) {
                 accessTokenCacheItem = filteredItems[0];
             }
@@ -2959,12 +2983,12 @@ var UserAgentApplication = /** @class */ (function () {
                 tokenResponse.stateResponse = stateResponse;
                 // async calls can fire iframe and login request at the same time if developer does not use the API as expected
                 // incoming callback needs to be looked up to find the request type
-                if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateLogin)) {
+                if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateLogin)) { // loginRedirect
                     tokenResponse.requestType = Constants_1.Constants.login;
                     tokenResponse.stateMatch = true;
                     return tokenResponse;
                 }
-                else if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateAcquireToken)) {
+                else if (stateResponse === this._cacheStorage.getItem(Constants_1.Constants.stateAcquireToken)) { //acquireTokenRedirect
                     tokenResponse.requestType = Constants_1.Constants.renewToken;
                     tokenResponse.stateMatch = true;
                     return tokenResponse;
@@ -3422,10 +3446,11 @@ var AccessTokenCacheItem_1 = __webpack_require__(18);
  * @hidden
  */
 var Storage = /** @class */ (function () {
-    function Storage(cacheLocation) {
+    function Storage(cacheLocation, cachePrefix) {
         if (Storage._instance) {
             return Storage._instance;
         }
+        this._cachePrefix = cachePrefix;
         this._cacheLocation = cacheLocation;
         this._localStorageSupported = typeof window[this._cacheLocation] !== "undefined" && window[this._cacheLocation] != null;
         this._sessionStorageSupported = typeof window[cacheLocation] !== "undefined" && window[cacheLocation] != null;
@@ -3438,7 +3463,7 @@ var Storage = /** @class */ (function () {
     // add value to storage
     Storage.prototype.setItem = function (key, value) {
         if (window[this._cacheLocation]) {
-            window[this._cacheLocation].setItem(key, value);
+            window[this._cacheLocation].setItem(this._cachePrefix + key, value);
         }
         else {
             throw new Error("localStorage and sessionStorage are not supported");
@@ -3447,7 +3472,7 @@ var Storage = /** @class */ (function () {
     // get one item by key from storage
     Storage.prototype.getItem = function (key) {
         if (window[this._cacheLocation]) {
-            return window[this._cacheLocation].getItem(key);
+            return window[this._cacheLocation].getItem(this._cachePrefix + key);
         }
         else {
             throw new Error("localStorage and sessionStorage are not supported");
@@ -3456,7 +3481,7 @@ var Storage = /** @class */ (function () {
     // remove value from storage
     Storage.prototype.removeItem = function (key) {
         if (window[this._cacheLocation]) {
-            return window[this._cacheLocation].removeItem(key);
+            return window[this._cacheLocation].removeItem(this._cachePrefix + key);
         }
         else {
             throw new Error("localStorage and sessionStorage are not supported");

@@ -11,6 +11,7 @@ export declare type tokenReceivedCallback = (errorDesc: string, token: string, e
 export declare class UserAgentApplication {
     private _cacheLocations;
     private _cacheLocation;
+    private _cachePrefix;
     readonly cacheLocation: string;
     private _logger;
     private _loginInProgress;
@@ -39,6 +40,7 @@ export declare class UserAgentApplication {
         logger?: Logger;
         loadFrameTimeout?: number;
         navigateToLoginRequestUrl?: boolean;
+        cachePrefix?: string;
     });
     private processCallBack(hash);
     loginRedirect(scopes?: Array<string>, extraQueryParameters?: string): void;

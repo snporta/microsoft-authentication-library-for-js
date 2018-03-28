@@ -28,10 +28,11 @@ var AccessTokenCacheItem_1 = require("./AccessTokenCacheItem");
  * @hidden
  */
 var Storage = /** @class */ (function () {
-    function Storage(cacheLocation) {
+    function Storage(cacheLocation, cachePrefix) {
         if (Storage._instance) {
             return Storage._instance;
         }
+        this._cachePrefix = cachePrefix;
         this._cacheLocation = cacheLocation;
         this._localStorageSupported = typeof window[this._cacheLocation] !== "undefined" && window[this._cacheLocation] != null;
         this._sessionStorageSupported = typeof window[cacheLocation] !== "undefined" && window[cacheLocation] != null;
@@ -44,7 +45,7 @@ var Storage = /** @class */ (function () {
     // add value to storage
     Storage.prototype.setItem = function (key, value) {
         if (window[this._cacheLocation]) {
-            window[this._cacheLocation].setItem(key, value);
+            window[this._cacheLocation].setItem(this._cachePrefix + key, value);
         }
         else {
             throw new Error("localStorage and sessionStorage are not supported");
@@ -53,7 +54,7 @@ var Storage = /** @class */ (function () {
     // get one item by key from storage
     Storage.prototype.getItem = function (key) {
         if (window[this._cacheLocation]) {
-            return window[this._cacheLocation].getItem(key);
+            return window[this._cacheLocation].getItem(this._cachePrefix + key);
         }
         else {
             throw new Error("localStorage and sessionStorage are not supported");
@@ -62,7 +63,7 @@ var Storage = /** @class */ (function () {
     // remove value from storage
     Storage.prototype.removeItem = function (key) {
         if (window[this._cacheLocation]) {
-            return window[this._cacheLocation].removeItem(key);
+            return window[this._cacheLocation].removeItem(this._cachePrefix + key);
         }
         else {
             throw new Error("localStorage and sessionStorage are not supported");

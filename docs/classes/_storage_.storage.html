@@ -91,6 +91,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_storage_.storage.html#_cachelocation" class="tsd-kind-icon">_cache<wbr>Location</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_storage_.storage.html#_cacheprefix" class="tsd-kind-icon">_cache<wbr>Prefix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_storage_.storage.html#_localstoragesupported" class="tsd-kind-icon">_local<wbr>Storage<wbr>Supported</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_storage_.storage.html#_sessionstoragesupported" class="tsd-kind-icon">_session<wbr>Storage<wbr>Supported</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static tsd-is-external"><a href="_storage_.storage.html#_instance" class="tsd-kind-icon">_instance</a></li>
@@ -117,19 +118,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Storage<span class="tsd-signature-symbol">(</span>cacheLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_storage_.storage.html" class="tsd-signature-type">Storage</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Storage<span class="tsd-signature-symbol">(</span>cacheLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, cachePrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_storage_.storage.html" class="tsd-signature-type">Storage</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L35">Storage.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L36">Storage.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>cacheLocation: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>cachePrefix: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_storage_.storage.html" class="tsd-signature-type">Storage</a></h4>
@@ -145,7 +149,17 @@
 					<div class="tsd-signature tsd-kind-icon">_cache<wbr>Location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L35">Storage.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L35">Storage.ts:35</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="_cacheprefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _cache<wbr>Prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">_cache<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L36">Storage.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -155,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">_local<wbr>Storage<wbr>Supported<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L33">Storage.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L33">Storage.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -165,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">_session<wbr>Storage<wbr>Supported<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L34">Storage.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L34">Storage.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">_instance<span class="tsd-signature-symbol">:</span> <a href="_storage_.storage.html" class="tsd-signature-type">Storage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L32">Storage.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L32">Storage.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +206,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L81">Storage.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L82">Storage.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -209,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L89">Storage.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L90">Storage.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L63">Storage.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L64">Storage.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -258,7 +272,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L113">Storage.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L114">Storage.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -284,7 +298,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L72">Storage.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L73">Storage.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -307,7 +321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L129">Storage.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L130">Storage.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -324,7 +338,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L54">Storage.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/snporta/microsoft-authentication-library-for-js/blob/dev/src/Storage.ts#L55">Storage.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -434,6 +448,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_storage_.storage.html#_cachelocation" class="tsd-kind-icon">_cache<wbr>Location</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_storage_.storage.html#_cacheprefix" class="tsd-kind-icon">_cache<wbr>Prefix</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_storage_.storage.html#_localstoragesupported" class="tsd-kind-icon">_local<wbr>Storage<wbr>Supported</a>

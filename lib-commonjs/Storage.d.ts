@@ -4,7 +4,8 @@ export declare class Storage {
     private _localStorageSupported;
     private _sessionStorageSupported;
     private _cacheLocation;
-    constructor(cacheLocation: string);
+    private _cachePrefix;
+    constructor(cacheLocation: string, cachePrefix: string);
     setItem(key: string, value: string): void;
     getItem(key: string): string;
     removeItem(key: string): void;
